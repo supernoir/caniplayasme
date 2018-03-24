@@ -1,0 +1,41 @@
+$color-primary: #f8b195;
+$color-secondary: #f67280;
+$color-tertiary: #c06c84;
+$color-quaternary: #6c5b7b;
+$color-quinary: #355c7d;
+
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed');
+
+body {
+	margin: 0;
+	padding: 0;
+	zoom: 1;
+	height: 100vh;
+	font-family: 'IBM Plex Sans Condensed', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	background: linear-gradient(#f8b195, #c06c84);
+}
+
+.app {
+	display: grid;
+	grid-template-columns: auto 400px auto;
+	grid-template-rows: 10% 600px auto;
+	grid-template-areas:
+		'header header header'
+		'. query query'
+		'. results results';
+}
+
+.header {
+	grid-area: header;
+	color: white;
+}
+.query {
+	grid-area: query;
+	background: white;
+	box-shadow: 0px 5px 0px #c06c84;
+}
+.results {
+	grid-area: results;
+	background: white;
+	box-shadow: 0px 5px 0px #333333;
+}
