@@ -5,7 +5,7 @@ export default class Header extends React.Component {
 	render() {
 		return (
 			<div className="header">
-				<Title text={'Can I play as Me?'} />
+				<Title />
 			</div>
 		);
 	}

@@ -1,7 +1,7 @@
 import React from 'react';
 import Query from './components/Query';
 import Header from './components/Header';
-import Results from './components/Results';
+import Footer from './components/Footer';
 
 export default class App extends React.Component {
 	render() {
@@ -9,7 +9,7 @@ export default class App extends React.Component {
 			<div className="app">
 				<Header />
 				<Query />
-				<Results />
+				<Footer />
 			</div>
 		);
 	}
