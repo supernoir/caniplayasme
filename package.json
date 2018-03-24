@@ -1,11 +1,15 @@
 {
-  "name": "caniplayasme",
-  "version": "0.0.1",
-  "main": "index.js",
-  "author": "supernoir <kawohl.bentodesign@gmail.com>",
-  "license": "MIT",
-  "dependencies": {
-    "express": "^4.16.2",
-    "nodemon": "^1.12.1"
-  }
+	"name": "caniplayasme",
+	"version": "0.0.1",
+	"main": "index.js",
+	"author": "supernoir <kawohl.bentodesign@gmail.com>",
+	"license": "MIT",
+	"dependencies": {
+		"express": "^4.16.2",
+		"fuse.js": "^3.2.0",
+		"nodemon": "^1.17.2"
+	},
+	"scripts": {
+		"start:server": "nodemon ./server/index.js"
+	}
 }
