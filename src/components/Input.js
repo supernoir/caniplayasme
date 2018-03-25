@@ -23,12 +23,12 @@ export default class Input extends React.Component {
 		super();
 
 		this.state = {
-			query           : '',
-			results         : [],
+			query: '',
+			results: [],
 			resultsAvailable: false,
-			loading         : true,
-			error           : false,
-			errorMessage    : ''
+			loading: true,
+			error: false,
+			errorMessage: ''
 		};
 		this.handleQueryInput = this.handleQueryInput.bind(this);
 		this.fetchResults = this.fetchResults.bind(this);
@@ -54,23 +54,23 @@ export default class Input extends React.Component {
 		if (queryParams !== '' || queryParams !== undefined || queryParams.length < 3) {
 			try {
 				axios({
-					method : 'get',
-					url    : '/games',
+					method: 'get',
+					url: '/games',
 					baseURL: 'http://localhost:3030',
-					params : { game: queryParams }
+					params: {game: queryParams}
 				}).then(data => {
 					console.log(data.data.result);
-					this.setState({ results: data.data.result, loading: false });
+					this.setState({results: data.data.result, loading: false});
 				});
 			} catch (error) {
 				this.setState({
-					error       : true,
+					error: true,
 					errorMessage: error
 				});
 			}
 		} else {
 			this.setState({
-				error       : true,
+				error: true,
 				errorMessage: 'Your query must be at least 3 characters long'
 			});
 		}
@@ -79,20 +79,19 @@ export default class Input extends React.Component {
 	componentDidMount() {
 		let queryParams = '';
 		axios({
-			method : 'get',
-			url    : '/games',
+			method: 'get',
+			url: '/games',
 			baseURL: 'http://localhost:3030',
-			params : { game: queryParams }
+			params: {game: queryParams}
 		}).then(data => {
 			console.log(data.data.result);
-			this.setState({ results: data.data.result, loading: false });
+			this.setState({results: data.data.result, loading: false});
 		});
 	}
 
 	render() {
 		return (
 			<form className="query-input">
-				<label className="query-input-text-label">What would you like to play?</label>
 				<input className="query-input-text" type="text" onChange={this.handleQueryInput} placeholder="The Name of the Game you'd like to play" />
 				{this.state.error ? <ErrorMessage message={this.state.errorMessage} /> : ''}
 				<ol className="results-list">

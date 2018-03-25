@@ -3,8 +3,9 @@ $color-secondary: #f67280;
 $color-tertiary: #c06c84;
 $color-quaternary: #6c5b7b;
 $color-quinary: #355c7d;
+$color-green: #6dbb53;
 
-@import url('https://fonts.googleapis.com/css?family=Exo+2|Expletus+Sans');
+@import url('https://fonts.googleapis.com/css?family=Exo+2:400,700|Carter+One');
 
 body {
 	margin: 0;
@@ -12,33 +13,50 @@ body {
 	zoom: 1;
 	height: 100vh;
 	font-family: 'Exo 2', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	font-weight: 400;
 	background: linear-gradient(#f8b195, #c06c84);
 }
 
 .app {
+	//transform: rotate(3deg);
+
 	display: grid;
 	grid-template-columns: 1fr 4fr 1fr;
-	grid-template-rows: 1fr 4fr 1fr;
+	grid-template-rows: auto 3fr auto;
 	grid-column-gap: 10px;
 	grid-row-gap: 15px;
 	grid-template-areas:
 		'. header .'
 		'. query .'
 		'. footer .';
+	text-align: center;
 }
 
 .header {
 	grid-area: header;
-	font-size: 3em;
 	color: white;
-	text-transform: uppercase;
-	//font-weight: bold;
-	text-shadow: 0px 3px 1px #c06c84;
-	font-family: 'Expletus Sans', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-content: center;
 
-	.highlighted {
-		color: white;
-		text-shadow: 0px 3px 1px #f67280;
+	.brand {
+		margin: 0;
+		font-size: 4em;
+		text-transform: uppercase;
+		text-shadow: 0px 2px 1px #c06c84;
+		//font-family: 'Carter One', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+		.highlighted {
+			color: white;
+			text-shadow: 0px 3px 1px #f67280;
+		}
+	}
+	.claim {
+		padding: 0.5em;
+		margin: 0;
+		font-size: 1.4em;
+		font-weight: 400;
+		color: #8b424a;
 	}
 }
 .query {
@@ -75,6 +93,15 @@ body {
 .footer {
 	grid-area: footer;
 	font-size: 1em;
+	.disclaimer {
+		margin: 0;
+		color: white;
+		font-size: 1em;
+		.header-link {
+			color: #8b424a;
+			text-decoration: none;
+		}
+	}
 }
 
 ol.results-list {
