@@ -5,46 +5,73 @@ const FuseJS = require('fuse.js');
 
 app.use((request, response, next) => {
 	response.header('Access-Control-Allow-Origin', '*');
-	response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-	response.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+	response.header(
+		'Access-Control-Allow-Headers',
+		'Origin, X-Requested-With, Content-Type, Accept'
+	);
+	response.header('Access-Control-Allow-Methods', 'POST, GET');
 	next();
 });
 
 const allgamedata = require('../data/allgamedata.json');
 
 const options = {
-	shouldSort: true,
-	includeScore: true,
-	includeMatches: false,
-	threshold: 0.2,
-	location: 0,
-	distance: 20,
-	maxPatternLength: 32,
+	shouldSort        : true,
+	includeScore      : true,
+	includeMatches    : false,
+	threshold         : 0.2,
+	location          : 0,
+	distance          : 20,
+	maxPatternLength  : 32,
 	minMatchCharLength: 2,
-	keys: ['name']
+	keys              : ['name']
 };
-const fuse = new FuseJS(allgamedata, options); // "list" is the item array
 
-app.get('/', (req, res) => {
-	res.send('Hello World');
-});
+const fuse = new FuseJS(allgamedata, options);
 
 app.get('/games/', (req, res) => {
-	let searchItem = req.query.game;
-	let searchResult = fuse.search(searchItem);
+	let searchResult = {};
 
-	searchResult = searchResult.splice(0, 5);
-
-	res.json({
-		result: searchResult
-	});
+	if (req !== undefined || req !== null) {
+		if (req.query !== undefined || req.query !== {}) {
+			let searchItem = req.query.game;
+			searchResult = fuse.search(searchItem);
+			searchResult = searchResult.splice(0, 5);
+		} else {
+			console.log('Incorrect Query');
+			throw new Error('Incorrect Query');
+		}
+	} else {
+		console.log('Request could not be retrieved');
+		throw new Error('Request could not be retrieved');
+	}
+	try {
+		if (
+			searchResult &&
+      searchResult.length &&
+      searchResult[0] &&
+      searchResult[0].item.name !== '' &&
+      typeof searchResult[0] !== undefined &&
+      searchResult[0] !== null
+		) {
+			res.json({
+				result: searchResult
+			});
+		} else {
+			console.log('Results could not be retrieved');
+			throw new Error('Results could not be retrieved');
+		}
+	} catch (error) {
+		console.log('Could not create a response to your query');
+		throw new Error('Could not create a response to your query');
+	}
 });
 
 app.get('/games/all', (req, res) => {
 	try {
-		res.json({games: allgamedata});
+		res.json({ games: allgamedata });
 	} catch (error) {
-		throw error;
+		throw new Error('Could not retrieve any game data');
 	}
 });
 
