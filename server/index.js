@@ -33,14 +33,9 @@ app.get('/games/', (req, res) => {
 	let searchResult = {};
 
 	if (req !== undefined || req !== null) {
-		if (req.query !== undefined || req.query !== {}) {
-			let searchItem = req.query.game;
-			searchResult = fuse.search(searchItem);
-			searchResult = searchResult.splice(0, 5);
-		} else {
-			console.log('Incorrect Query');
-			throw new Error('Incorrect Query');
-		}
+		let searchItem = req.query.game;
+		searchResult = fuse.search(searchItem);
+		searchResult = searchResult.splice(0, 5);
 	} else {
 		console.log('Request could not be retrieved');
 		throw new Error('Request could not be retrieved');
@@ -48,7 +43,7 @@ app.get('/games/', (req, res) => {
 	try {
 		if (
 			searchResult.length &&
-      searchResult[0].item.name !== '' &&
+			searchResult[0].item.name !== '' &&
       typeof searchResult[0] !== undefined &&
       searchResult[0] !== null
 		) {
@@ -62,6 +57,7 @@ app.get('/games/', (req, res) => {
 	} catch (error) {
 		console.log('Could not create a response to your query');
 		throw new Error('Could not create a response to your query');
+		// To Do: Should not kill the server, display error as could not find in UI
 	}
 });
 

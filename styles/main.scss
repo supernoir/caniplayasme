@@ -3,8 +3,13 @@ $color-secondary: #f67280;
 $color-tertiary: #c06c84;
 $color-quaternary: #6c5b7b;
 $color-quinary: #355c7d;
+$color-claim: #8b424a;
 $color-green: #6dbb53;
+$color-white: #fff;
+$color-lightgrey: #ddd;
+$color-black: #333;
 
+$font: 'Exo 2', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 @import url('https://fonts.googleapis.com/css?family=Exo+2:400,700|Carter+One');
 
 body {
@@ -12,9 +17,9 @@ body {
 	padding: 0;
 	zoom: 1;
 	height: 100vh;
-	font-family: 'Exo 2', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	font-family: $font;
 	font-weight: 400;
-	background: linear-gradient(#f8b195, #c06c84);
+	background: linear-gradient($color-primary, $color-tertiary);
 }
 
 .app {
@@ -34,7 +39,7 @@ body {
 
 .header {
 	grid-area: header;
-	color: white;
+	color: $color-white;
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
@@ -44,11 +49,11 @@ body {
 		margin: 0;
 		font-size: 4em;
 		text-transform: uppercase;
-		text-shadow: 0px 2px 1px #c06c84;
+		text-shadow: 0px 2px 1px $color-tertiary;
 		//font-family: 'Carter One', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 		.highlighted {
-			color: white;
-			text-shadow: 0px 3px 1px #f67280;
+			color: $color-white;
+			text-shadow: 0px 3px 1px $color-secondary;
 		}
 	}
 	.claim {
@@ -56,13 +61,13 @@ body {
 		margin: 0;
 		font-size: 1.4em;
 		font-weight: 400;
-		color: #8b424a;
+		color: $color-claim;
 	}
 }
 .query {
 	grid-area: query;
-	background: white;
-	box-shadow: 0px 5px 0px #c06c84;
+	background: $color-white;
+	box-shadow: 0px 5px 0px $color-tertiary;
 	padding: 1em;
 	text-align: center;
 
@@ -74,18 +79,18 @@ body {
 
 		.query-input-text {
 			text-align: center;
-			color: #c06c84;
+			color: $color-tertiary;
 			font-size: 1.2em;
-			border: 2px solid #c06c84;
+			border: 2px solid $color-tertiary;
 			border-radius: 4px;
-			box-shadow: inset 0 -6px 0px rgba(#c06c84, 0.2);
+			box-shadow: inset 0 -6px 0px rgba($color-tertiary, 0.2);
 			padding: 15px;
 			background: rgba(255, 255, 255, 0.5);
 			margin: 1em;
 		}
 
 		.query-input-text-label {
-			color: #355c7d;
+			color: $color-quinary;
 			font-size: 1.2em;
 		}
 	}
@@ -109,21 +114,21 @@ ol.results-list {
 	.results-list-item {
 		font-size: 1.6em;
 		padding: 0.4em;
-		border-bottom: 1px dashed #ddd;
+		border-bottom: 1px dashed $color-lightgrey;
 		&:nth-child(1n + 1) {
-			color: rgba(#355c7d, 1);
+			color: rgba($color-quinary, 1);
 		}
 		&:nth-child(1n + 2) {
-			color: rgba(#355c7d, 0.8);
+			color: rgba($color-quinary, 0.8);
 		}
 		&:nth-child(1n + 3) {
-			color: rgba(#355c7d, 0.6);
+			color: rgba($color-quinary, 0.6);
 		}
 		&:nth-child(1n + 4) {
-			color: rbga(#355c7d, 0.4);
+			color: rbga($color-quinary, 0.4);
 		}
 		&:nth-child(1n + 5) {
-			color: rbga(#355c7d, 0.2);
+			color: rbga($color-quinary, 0.2);
 		}
 	}
 	.results-list-item:last-child {
@@ -132,7 +137,7 @@ ol.results-list {
 }
 
 .text-muted {
-	color: #ddd;
+	color: $color-lightgrey;
 }
 
 .loader {
@@ -140,7 +145,7 @@ ol.results-list {
 	animation: pulsate 1s ease-out;
 	animation-iteration-count: infinite;
 	text-transform: uppercase;
-	color: #c06c84;
+	color: $color-tertiary;
 }
 
 @keyframes pulsate {
@@ -156,7 +161,7 @@ ol.results-list {
 }
 
 .error {
-	background: #f67280;
+	background: $color-secondary;
 	padding: 1em;
 	border-radius: 4px;
 	margin-bottom: 10px;
@@ -164,19 +169,19 @@ ol.results-list {
 		.error-message-tag {
 			margin-right: 10px;
 			border-radius: 4px;
-			background: white;
+			background: $color-white;
 			padding: 0.4em;
-			color: #f67280;
+			color: $color-secondary;
 			text-transform: uppercase;
 		}
-		color: white;
+		color: $color-white;
 		font-size: 1em;
 	}
 }
 
 
 .info {
-	background: #6c5b7b;
+	background: $color-quaternary;
 	padding: 1em;
 	border-radius: 4px;
 	margin-bottom: 10px;
@@ -184,12 +189,12 @@ ol.results-list {
 		.info-message-tag {
 			margin-right: 10px;
 			border-radius: 4px;
-			background: white;
+			background: $color-white;
 			padding: 0.4em;
-			color: #6c5b7b;
+			color: $color-quaternary;
 			text-transform: uppercase;
 		}
-		color: white;
+		color: $color-white;
 		font-size: 1em;
 	}
 }
