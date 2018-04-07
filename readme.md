@@ -39,8 +39,3 @@
 ### TODO
 - Unit Test Integration
 - Automatic Deploys
-
-
-
-### INSTALL SERVER
-- Install the server dependencies with
