@@ -1,6 +1,9 @@
 import React from 'react';
 import axios from 'axios';
+
+import Results from './Results';
 import ErrorMessage from './ErrorMessage';
+import InfoMessage from './InfoMessage';
 
 const Loading = () => {
 	return <span className="loader">Loading</span>;
@@ -12,11 +15,15 @@ export default class Input extends React.Component {
 
 		this.state = {
 			query           : '',
+			hasResults      : false,
 			results         : [],
 			resultsAvailable: false,
 			loading         : true,
 			error           : false,
-			errorMessage    : ''
+			errorMessage    : '',
+			info            : false,
+			infoMessage     : '',
+			queryCount      : 0
 		};
 
 		this.testForInputValues = this.testForInputValues.bind(this);
@@ -25,33 +32,40 @@ export default class Input extends React.Component {
 	}
 
 	testForInputValues(values) {
-		let validExpression = /^[a-z0-9]+$/;
+		let validExpression = /(\w)+/;
 		return validExpression.test(values);
 	}
 
 	handleQueryInput(event) {
 		let tempInput = event.target.value;
-		if (this.testForInputValues(tempInput) === true) {
-			if (tempInput.length < 3) {
+		if (this.testForInputValues(tempInput)) {
+			this.setState({
+				query: tempInput,
+				error: false,
+				info : false
+			});
+			try {
+				this.fetchResults();
+			} catch (error) {
 				this.setState({
-					query: tempInput,
-					error: false
+					error       : true,
+					errorMessage: error
 				});
-				try {
-					this.fetchResults();
-				} catch (error) {
-					this.setState({
-						error       : true,
-						errorMessage: error
-					});
-				}
 			}
 		} else {
 			this.setState({
-				error       : true,
-				errorMessage: 'Only Alphanumeric Characters (a-Z, 0-9) are permitted.'
+				resultsAvailable: false,
+				error           : true,
+				errorMessage    : 'Only Alphanumeric Characters (a-Z, 0-9) are permitted.'
 			});
 		}
+	}
+
+	componentDidMount() {
+		this.setState({
+			loading   : false,
+			queryCount: this.state.queryCount++
+		});
 	}
 
 	componentWillMount() {
@@ -62,12 +76,12 @@ export default class Input extends React.Component {
 
 	fetchResults() {
 		let queryParams = this.state.query;
-
-		if (
-			queryParams !== '' &&
-      queryParams !== undefined &&
-      queryParams.length < 3
-		) {
+		if (queryParams === '' || queryParams.length < 3) {
+			this.setState({
+				info       : true,
+				infoMessage: 'Please enter at least three characters.'
+			});
+		} else if (queryParams !== undefined && queryParams.length >= 3) {
 			try {
 				axios({
 					method : 'get',
@@ -75,7 +89,7 @@ export default class Input extends React.Component {
 					baseURL: 'http://localhost:3030',
 					params : { game: queryParams }
 				}).then(data => {
-					this.setState({ results: data.data.result, loading: false });
+					this.setState({ results: data.data.result, hasResults: true, loading: false });
 				});
 			} catch (error) {
 				this.setState({
@@ -93,22 +107,18 @@ export default class Input extends React.Component {
 					className="query-input-text"
 					type="text"
 					onChange={this.handleQueryInput}
+					onKeyDown={(e)=> {if (e.key === 'Enter') {e.preventDefault();}}}
 					placeholder="The Name of the Game you'd like to play"
 				/>
+				{this.state.info ? (
+					<InfoMessage message={this.state.infoMessage} />
+				) : null}
 				{this.state.error ? (
 					<ErrorMessage message={this.state.errorMessage} />
 				) : null}
-				<ol className="results-list">
-					{this.state.loading ? <Loading /> : null}
-					{this.state.results.map(result => {
-						return (
-							<li className="results-list-item">
-								{result.item.name}{' '}
-								<span className="text-muted">{result.score}</span>
-							</li>
-						);
-					})}
-				</ol>
+				{this.state.hasResults ? <Results results={this.state.results} /> : <p className="noresults">{`No Matching Games found`}</p> }
+				{this.props.loading ? <Loading /> : null}
+
 			</form>
 		);
 	}

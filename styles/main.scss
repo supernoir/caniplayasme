@@ -159,6 +159,7 @@ ol.results-list {
 	background: #f67280;
 	padding: 1em;
 	border-radius: 4px;
+	margin-bottom: 10px;
 	.error-message {
 		.error-message-tag {
 			margin-right: 10px;
@@ -166,6 +167,26 @@ ol.results-list {
 			background: white;
 			padding: 0.4em;
 			color: #f67280;
+			text-transform: uppercase;
+		}
+		color: white;
+		font-size: 1em;
+	}
+}
+
+
+.info {
+	background: #6c5b7b;
+	padding: 1em;
+	border-radius: 4px;
+	margin-bottom: 10px;
+	.info-message {
+		.info-message-tag {
+			margin-right: 10px;
+			border-radius: 4px;
+			background: white;
+			padding: 0.4em;
+			color: #6c5b7b;
 			text-transform: uppercase;
 		}
 		color: white;

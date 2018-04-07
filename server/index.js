@@ -21,9 +21,9 @@ const options = {
 	includeMatches    : false,
 	threshold         : 0.2,
 	location          : 0,
-	distance          : 20,
+	distance          : 10,
 	maxPatternLength  : 32,
-	minMatchCharLength: 2,
+	minMatchCharLength: 3,
 	keys              : ['name']
 };
 
@@ -47,9 +47,7 @@ app.get('/games/', (req, res) => {
 	}
 	try {
 		if (
-			searchResult &&
-      searchResult.length &&
-      searchResult[0] &&
+			searchResult.length &&
       searchResult[0].item.name !== '' &&
       typeof searchResult[0] !== undefined &&
       searchResult[0] !== null
