@@ -18,25 +18,39 @@ export default class Input extends React.Component {
 			error           : false,
 			errorMessage    : ''
 		};
+
+		this.testForInputValues = this.testForInputValues.bind(this);
 		this.handleQueryInput = this.handleQueryInput.bind(this);
 		this.fetchResults = this.fetchResults.bind(this);
 	}
 
+	testForInputValues(values) {
+		let validExpression = /^[a-z0-9]+$/;
+		return validExpression.test(values);
+	}
+
 	handleQueryInput(event) {
 		let tempInput = event.target.value;
-
-		if (tempInput.length < 3) {
-			this.setState({
-				query: tempInput
-			});
-			try {
-				this.fetchResults();
-			} catch (error) {
+		if (this.testForInputValues(tempInput) === true) {
+			if (tempInput.length < 3) {
 				this.setState({
-					error       : true,
-					errorMessage: error
+					query: tempInput,
+					error: false
 				});
+				try {
+					this.fetchResults();
+				} catch (error) {
+					this.setState({
+						error       : true,
+						errorMessage: error
+					});
+				}
 			}
+		} else {
+			this.setState({
+				error       : true,
+				errorMessage: 'Only Alphanumeric Characters (a-Z, 0-9) are permitted.'
+			});
 		}
 	}
 
