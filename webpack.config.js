@@ -20,6 +20,10 @@ module.exports = {
 				loader : 'eslint-loader'
 			},
 			{
+				test  : /\.tsx?$/,
+				loader: 'awesome-typescript-loader'
+			},
+			{
 				test   : /\.js$/,
 				loader : 'babel-loader',
 				exclude: /node_modules/,
