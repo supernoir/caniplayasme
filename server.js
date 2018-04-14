@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const port = process.env.port || 3030;
 const FuseJS = require('fuse.js');
+const path = require('path');
+const serveStatic = require('serve-static');
+
 
 app.use((request, response, next) => {
 	response.header('Access-Control-Allow-Origin', '*');
@@ -13,7 +16,10 @@ app.use((request, response, next) => {
 	next();
 });
 
-const allgamedata = require('../data/allgamedata.json');
+app.use('/static', express.static(path.join(__dirname, '/dist')));
+//app.use(serveStatic(__dirname + "/dist"));
+
+const allgamedata = require('./data/allgamedata.json');
 
 const options = {
 	shouldSort        : true,
