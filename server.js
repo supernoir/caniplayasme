@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const host = '0.0.0.0';
 const port = process.env.port || 3030;
 const FuseJS = require('fuse.js');
 const path = require('path');
@@ -73,5 +74,6 @@ app.get('/games/all', (req, res) => {
 	}
 });
 
-console.log(`Server running on port ${port}`);
-app.listen(port);
+app.listen(port, host, () => {
+	console.log(`Server running on port ${port}`);
+});
