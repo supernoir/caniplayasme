@@ -4,7 +4,7 @@ const host = '0.0.0.0';
 const port = process.env.port || 3030;
 const FuseJS = require('fuse.js');
 const path = require('path');
-
+const allgamedata = require('./data/allgamedata.json');
 
 app.use((request, response, next) => {
 	response.header('Access-Control-Allow-Origin', '*');
@@ -18,7 +18,6 @@ app.use((request, response, next) => {
 
 app.use('/static', express.static(path.join(__dirname, '/dist')));
 
-const allgamedata = require('./data/allgamedata.json');
 
 const options = {
 	shouldSort        : true,
