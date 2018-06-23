@@ -9,6 +9,7 @@ const allgamedata = require('./data/allgamedata.json');
 
 app.use(cors({ origin: 'http://cipam.supernoir.io' }));
 app.use(function (request, response, next) {
+	response.header('Content-Security-Policy', 'default-src \'self\';script-src \'self\';object-src \'none\';img-src \'self\';media-src \'self\';frame-src \'none\';font-src \'self\' data:;connect-src \'self\';style-src \'self\'');
 	response.header('Access-Control-Allow-Origin', 'cipam.supernoir.io');
 	response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 	response.header('Access-Control-Allow-Methods', 'POST, GET');
