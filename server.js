@@ -3,8 +3,11 @@ const app = express();
 const host = '0.0.0.0';
 const port = process.env.port || 3032;
 const FuseJS = require('fuse.js');
+const cors = require('cors');
 const path = require('path');
 const allgamedata = require('./data/allgamedata.json');
+
+app.use(cors());
 app.use(function (request, response, next) {
 	response.header('Access-Control-Allow-Origin', '*');
 	response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
