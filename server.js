@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const host = '0.0.0.0';
+const host = '127.0.0.1';
 const port = process.env.port || 3032;
 const FuseJS = require('fuse.js');
 const cors = require('cors');
@@ -9,7 +9,7 @@ const allgamedata = require('./data/allgamedata.json');
 
 app.use(cors({ origin: 'http://cipam.supernoir.io' }));
 app.use(function (request, response, next) {
-	response.header('Access-Control-Allow-Origin', 'supernoir.io');
+	response.header('Access-Control-Allow-Origin', 'cipam.supernoir.io');
 	response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 	response.header('Access-Control-Allow-Methods', 'POST, GET');
 	next();
