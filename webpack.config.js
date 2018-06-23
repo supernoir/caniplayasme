@@ -11,7 +11,10 @@ module.exports = {
 		filename: 'bundle.js'
 	},
 	devtool: 'source-map',
-	module : {
+	resolve: {
+		extensions: ['.ts', '.tsx', '.js', '.json']
+	},
+	module: {
 		rules: [
 			{
 				enforce: 'pre', // pre loader (https://github.com/MoOx/eslint-loader)
@@ -22,6 +25,11 @@ module.exports = {
 			{
 				test  : /\.tsx?$/,
 				loader: 'awesome-typescript-loader'
+			},
+			{
+				enforce: 'pre',
+				test   : /\.js$/,
+				loader : 'source-map-loader'
 			},
 			{
 				test   : /\.js$/,
@@ -63,7 +71,7 @@ module.exports = {
 			chunkFilename: '[id].css'
 		}),
 		new HtmlWebpackPlugin({
-			title   : '友漢字 - TomoKanji',
+			title   : 'Can I Play As Me?',
 			filename: 'index.html',
 			template: 'index.html'
 		}),

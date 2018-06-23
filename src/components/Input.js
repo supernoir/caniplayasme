@@ -62,9 +62,10 @@ export default class Input extends React.Component {
 	}
 
 	componentDidMount() {
+		let tempState = this.state.queryCount;
 		this.setState({
 			loading   : false,
-			queryCount: this.state.queryCount++
+			queryCount: tempState++
 		});
 	}
 
