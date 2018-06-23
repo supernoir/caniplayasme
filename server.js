@@ -1,10 +1,10 @@
-var express = require('express');
-var app = express();
-var host = '0.0.0.0';
-var port = process.env.port || 3032;
-var FuseJS = require('fuse.js');
-var path = require('path');
-var allgamedata = require('./data/allgamedata.json');
+const express = require('express');
+const app = express();
+const host = '0.0.0.0';
+const port = process.env.port || 3032;
+const FuseJS = require('fuse.js');
+const path = require('path');
+const allgamedata = require('./data/allgamedata.json');
 app.use(function (request, response, next) {
 	response.header('Access-Control-Allow-Origin', '*');
 	response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -12,7 +12,10 @@ app.use(function (request, response, next) {
 	next();
 });
 app.use('/static', express.static(path.join(__dirname, '/dist')));
-var options = {
+app.get('/', function(req, res) {
+	res.sendfile('./dist/index.html');
+});
+const options = {
 	shouldSort        : true,
 	includeScore      : true,
 	includeMatches    : false,
@@ -23,11 +26,11 @@ var options = {
 	minMatchCharLength: 3,
 	keys              : ['name']
 };
-var fuse = new FuseJS(allgamedata, options);
+const fuse = new FuseJS(allgamedata, options);
 app.get('/games/', function (req, res) {
-	var searchResult = [];
+	let searchResult = [];
 	if (req !== undefined || req !== null) {
-		var searchItem = req.query.game;
+		const searchItem = req.query.game;
 		searchResult = fuse.search(searchItem);
 		searchResult = searchResult.splice(0, 5);
 	}
