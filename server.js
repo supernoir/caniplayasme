@@ -14,7 +14,7 @@ const allgamedata = require('./data/allgamedata.json');
 	}
 })); */
 app.use(function (request, response, next) {
-	response.header('Content-Security-Policy', 'script-src \'self\' https://apis.google.com http://cipam.supernoir.io');
+	response.header('Content-Security-Policy', 'script-src \'self\' http://cipam.supernoir.io https://apis.google.com http://cipam.supernoir.io');
 	response.header('Access-Control-Allow-Origin', '*');
 	response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 	response.header('Access-Control-Allow-Methods', 'POST, GET');
