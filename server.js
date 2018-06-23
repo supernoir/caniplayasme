@@ -12,8 +12,8 @@ app.use(function (request, response, next) {
 	next();
 });
 app.use('/static', express.static(path.join(__dirname, '/dist')));
-app.get('/', function(req, res) {
-	res.sendfile('./dist/index.html');
+app.get('/', (req, res) => {
+	res.sendFile(path.join(__dirname,'index.html'));
 });
 const options = {
 	shouldSort        : true,
