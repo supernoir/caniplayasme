@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 export default class Results extends React.Component {
 	render() {
@@ -17,3 +17,8 @@ export default class Results extends React.Component {
 		);
 	}
 }
+
+
+Results.propTypes = {
+	results: PropTypes.array
+};

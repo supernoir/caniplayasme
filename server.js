@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var host = '0.0.0.0';
-var port = process.env.port || 3030;
+var port = process.env.port || 3032;
 var FuseJS = require('fuse.js');
 var path = require('path');
 var allgamedata = require('./data/allgamedata.json');
