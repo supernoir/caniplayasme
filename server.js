@@ -3,14 +3,13 @@ const app = express();
 const host = '127.0.0.1';
 const port = process.env.port || 3032;
 const FuseJS = require('fuse.js');
-const cors = require('cors');
+//const cors = require('cors');
 const path = require('path');
 const allgamedata = require('./data/allgamedata.json');
 
-app.use(cors({ origin: 'http://cipam.supernoir.io' }));
+//app.use(cors({ origin: 'http://cipam.supernoir.io' }));
 app.use(function (request, response, next) {
-	response.header('Content-Security-Policy', 'default-src \'self\';script-src \'self\';object-src \'none\';img-src \'self\';media-src \'self\';frame-src \'none\';font-src \'self\' data:;connect-src \'self\';style-src \'self\'');
-	response.header('Access-Control-Allow-Origin', 'cipam.supernoir.io');
+	response.setHeader('Content-Security-Policy', 'script-src \'self\' https://apis.google.com');	response.header('Access-Control-Allow-Origin', 'cipam.supernoir.io');
 	response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 	response.header('Access-Control-Allow-Methods', 'POST, GET');
 	next();
