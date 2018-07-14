@@ -1,20 +1,23 @@
 const express = require('express');
+const FuseJS = require('fuse.js');
+const path = require('path');
+const helmet = require('helmet');
+
 const app = express();
 const host = '127.0.0.1';
 const port = process.env.port || 3032;
-const FuseJS = require('fuse.js');
-//const helmet = require('helmet');
-const path = require('path');
 const allgamedata = require('./data/allgamedata.json');
 
-/* app.use(helmet.contentSecurityPolicy({
+app.use(helmet.contentSecurityPolicy({
 	directives: {
 		defaultSrc: ['\'self\''],
 		styleSrc  : ['\'self\'', 'https://apis.google.com']
 	}
-})); */
+}));
+
 app.use(function (request, response, next) {
-	response.header('Content-Security-Policy', 'script-src \'self\' http://cipam.supernoir.io https://apis.google.com http://cipam.supernoir.io');
+	response.header('Content-Security-Policy', 'default-src \'self\' https://cipam.supernoir.io https://apis.google.com http://cipam.supernoir.io');
+	response.header('Content-Security-Policy', 'script-src \'self\' https://cipam.supernoir.io https://apis.google.com http://cipam.supernoir.io');
 	response.header('Access-Control-Allow-Origin', '*');
 	response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 	response.header('Access-Control-Allow-Methods', 'POST, GET');
@@ -36,6 +39,7 @@ const options = {
 	keys              : ['name']
 };
 const fuse = new FuseJS(allgamedata, options);
+
 app.get('/games/', function (req, res) {
 	let searchResult = [];
 	if (req !== undefined || req !== null) {
@@ -44,7 +48,6 @@ app.get('/games/', function (req, res) {
 		searchResult = searchResult.splice(0, 5);
 	}
 	else {
-		console.log('Request could not be retrieved');
 		throw new Error('Request could not be retrieved');
 	}
 	try {
@@ -57,12 +60,10 @@ app.get('/games/', function (req, res) {
 			});
 		}
 		else {
-			console.log('Results could not be retrieved');
 			throw new Error('Results could not be retrieved');
 		}
 	}
 	catch (error) {
-		console.log('Could not create a response to your query');
 		throw new Error('Could not create a response to your query');
 		// To Do: Should not kill the server, display error as could not find in UI
 	}
