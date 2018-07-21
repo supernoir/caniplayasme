@@ -87,7 +87,7 @@ export default class Input extends React.Component {
 				axios({
 					method : 'get',
 					url    : '/games',
-					baseURL: 'http://localhost:3030',
+					baseURL: 'http://localhost:3032',
 					params : { game: queryParams }
 				}).then(data => {
 					this.setState({ results: data.data.result, hasResults: true, loading: false });

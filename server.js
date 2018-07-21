@@ -1,18 +1,33 @@
-var express = require('express');
-var app = express();
-var host = '0.0.0.0';
-var port = process.env.port || 3032;
-var FuseJS = require('fuse.js');
-var path = require('path');
-var allgamedata = require('./data/allgamedata.json');
+const express = require('express');
+const FuseJS = require('fuse.js');
+const path = require('path');
+const helmet = require('helmet');
+
+const app = express();
+const host = '127.0.0.1';
+const port = process.env.port || 3032;
+const allgamedata = require('./data/allgamedata.json');
+
+app.use(helmet.contentSecurityPolicy({
+	directives: {
+		defaultSrc: ['\'self\''],
+		styleSrc  : ['\'self\'', 'https://apis.google.com']
+	}
+}));
+
 app.use(function (request, response, next) {
+	response.header('Content-Security-Policy', 'default-src \'self\' https://cipam.supernoir.io https://apis.google.com http://cipam.supernoir.io');
+	response.header('Content-Security-Policy', 'script-src \'self\' https://cipam.supernoir.io https://apis.google.com http://cipam.supernoir.io');
 	response.header('Access-Control-Allow-Origin', '*');
 	response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 	response.header('Access-Control-Allow-Methods', 'POST, GET');
 	next();
 });
 app.use('/static', express.static(path.join(__dirname, '/dist')));
-var options = {
+app.get('/', (req, res) => {
+	res.sendFile(path.join(__dirname,'index.html'));
+});
+const options = {
 	shouldSort        : true,
 	includeScore      : true,
 	includeMatches    : false,
@@ -23,16 +38,20 @@ var options = {
 	minMatchCharLength: 3,
 	keys              : ['name']
 };
-var fuse = new FuseJS(allgamedata, options);
+const fuse = new FuseJS(allgamedata, options);
+
+app.get('/hello/', function (req,res) {
+	res.send('Hello to you too');
+});
+
 app.get('/games/', function (req, res) {
-	var searchResult = [];
+	let searchResult = [];
 	if (req !== undefined || req !== null) {
-		var searchItem = req.query.game;
+		const searchItem = req.query.game;
 		searchResult = fuse.search(searchItem);
 		searchResult = searchResult.splice(0, 5);
 	}
 	else {
-		console.log('Request could not be retrieved');
 		throw new Error('Request could not be retrieved');
 	}
 	try {
@@ -45,12 +64,10 @@ app.get('/games/', function (req, res) {
 			});
 		}
 		else {
-			console.log('Results could not be retrieved');
 			throw new Error('Results could not be retrieved');
 		}
 	}
 	catch (error) {
-		console.log('Could not create a response to your query');
 		throw new Error('Could not create a response to your query');
 		// To Do: Should not kill the server, display error as could not find in UI
 	}
