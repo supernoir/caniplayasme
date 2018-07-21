@@ -40,6 +40,10 @@ const options = {
 };
 const fuse = new FuseJS(allgamedata, options);
 
+app.get('/hello/', function (req,res) {
+	res.send('Hello to you too');
+});
+
 app.get('/games/', function (req, res) {
 	let searchResult = [];
 	if (req !== undefined || req !== null) {
